@@ -1,8 +1,29 @@
 "use strict"
-
+/*EVENT LISTENERS*/
 const Addbuttons = document.querySelectorAll("button");
 Addbuttons.forEach((button) => button.addEventListener("click", addTask));
 
+function changeTaskList (event) {
+    let mouseEvent = event;
+    let currentTask = mouseEvent.target;
+        document.onkeydown = (event)=>{
+            let nextList;
+            if(event.altKey && event.key === "1"){
+                nextList = document.querySelector(".to-do-tasks");
+            } else if (event.altKey && event.key === "2"){
+                nextList = document.querySelector(".in-progress-tasks");
+            } else if (event.altKey && event.key === "3") {
+                nextList = document.querySelector(".done-tasks");
+            } else {
+                return;
+            }
+            taskOnTop (currentTask, nextList);
+            mouseEvent = {};
+            currentTask = mouseEvent.target;
+         }; 
+}
+
+/*INTERACTION FUNCTIONS*/
 
 function addTask (event) {
     const currentButton = event.target;
@@ -15,13 +36,8 @@ function addTask (event) {
         return;
     }
     //Insert new task element
-    const newTaskElem = createElement("li", taskText, [], ["task"], {}, {});
-    if (taskList.children.length === 0){ //There are no tasks
-        taskList.appendChild(newTaskElem);
-    } else {
-        const firstTask = taskList.firstElementChild;
-        firstTask.insertAdjacentElement("beforebegin", newTaskElem);
-    }
+    const newTaskElem = createElement("li", taskText, [], ["task"], {}, {mouseover: changeTaskList});
+    taskOnTop (newTaskElem, taskList);
     input.value = "";
 }
 

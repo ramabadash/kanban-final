@@ -1,4 +1,15 @@
 "use strict"
+//Add task on top
+function taskOnTop (newTaskElem, taskList) {
+    if (newTaskElem === undefined || taskList === undefined) return;
+    if (!taskList.hasChildNodes()){ //There are no tasks
+        taskList.appendChild(newTaskElem);
+    } else {
+        const firstTask = taskList.firstElementChild;
+        firstTask.insertAdjacentElement("beforebegin", newTaskElem);
+    }
+}
+
 //Create Element
 function createElement(tagName, innerText, children = [], classes = [], attributes = {}, eventListeners = {}) {
     let newElement = document.createElement(tagName);
