@@ -48,7 +48,7 @@ function taskOnTop (newTaskElem, taskList) {
 }
 //Create List Element
 function createListElement (innerText) {
-    return createElement("li", innerText, [], ["task"], {}, {mouseover: changeTaskList, click: editTaske});
+    return createElement("li", innerText, [], ["task"], {}, {mouseover: changeTaskList, click: editTask});
 }
 //Create Element
 function createElement(tagName, innerText, children = [], classes = [], attributes = {}, eventListeners = {}) {

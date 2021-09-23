@@ -8,10 +8,14 @@ document.querySelector("#search").addEventListener("keyup", searchBar);
 
 /*INTERACTION FUNCTIONS*/
 //Edit task content
-function editTaske (event) {
+function editTask (event) {
     const currentTask = event.target;
+    const currentList = currentTask.parentElement;
     currentTask.setAttribute("contenteditable", true);
-    currentTask.onblur = () => currentTask.setAttribute("contenteditable", false);
+    currentTask.onblur = () => {
+        saveNewDataLocal(currentList.id, currentList);
+        currentTask.setAttribute("contenteditable", false);
+    }
 }
 //Search case-insensitively so only tasks that match the search string are displayed.
 function searchBar () {
