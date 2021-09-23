@@ -14,7 +14,6 @@ function updateDom() {
     tasks = JSON.parse(localStorage.getItem("tasks"));
     for (let key in tasks) {
         let listElem = document.getElementById(key);
-        console.log(tasks[key]);
         //If there are existing tasks in memory you will create new elements
         if (tasks[key].length > 0) {
             for (let content of tasks[key]) {

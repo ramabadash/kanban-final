@@ -32,6 +32,7 @@ function searchBar () {
 function changeTaskList (event) {
     let mouseEvent = event;
     let currentTask = mouseEvent.target;
+    let previousList = currentTask.parentElement;
         document.onkeydown = (event)=>{
             let nextList;
             if(event.altKey && event.key === "1"){
@@ -44,6 +45,9 @@ function changeTaskList (event) {
                 return;
             }
             taskOnTop (currentTask, nextList);
+            //save new arrangement
+            saveNewDataLocal(previousList.id, previousList); // save old list changes to local
+            saveNewDataLocal(nextList.id, nextList); // save new list changes to local
             mouseEvent = {};
             currentTask = mouseEvent.target;
          }; 
