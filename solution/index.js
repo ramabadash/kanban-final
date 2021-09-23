@@ -1,5 +1,5 @@
 "use strict"
-dataReconstruction (); // Create DOM by the Local Storage
+dataReconstruction () ; // Create DOM by the Local Storage
 
 /*EVENT LISTENERS*/
 const Addbuttons = document.querySelectorAll("button");
