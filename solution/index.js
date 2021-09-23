@@ -1,4 +1,6 @@
 "use strict"
+dataReconstruction (); // Create DOM by the Local Storage
+
 /*EVENT LISTENERS*/
 const Addbuttons = document.querySelectorAll("button");
 Addbuttons.forEach((button) => button.addEventListener("click", addTask));
@@ -58,8 +60,10 @@ function addTask (event) {
         return;
     }
     //Insert new task element
-    const newTaskElem = createElement("li", taskText, [], ["task"], {}, {mouseover: changeTaskList, click: editTaske});
+    const newTaskElem = createListElement(taskText);
     taskOnTop (newTaskElem, taskList);
     input.value = "";
+    //save on local storage
+    saveNewDataLocal (taskList.id, taskList); // taskList.id = tasks[keys]
 }
 

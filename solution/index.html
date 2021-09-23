@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="tasksObject.js"></script>
     <script src="assistFunctions.js" defer></script>
     <script src="./index.js" defer></script>
     <link rel="stylesheet" href="./styles.css" />
@@ -17,21 +18,21 @@
         <h2>TO-DO:</h2>
         <input type="textarea" id="add-to-do-task" placeholder="Write new task here">
         <button id="submit-add-to-do">+Add task</button>
-        <ul class="to-do-tasks"></ul>
+        <ul id="todo" class="to-do-tasks"></ul>
     </div>
 
     <div>
         <h2>IN-PROGRESS:</h2>
         <input type="textarea" id="add-in-progress-task" placeholder="Write new task here">
         <button id="submit-add-in-progress">+Add task</button>
-        <ul class="in-progress-tasks"></ul>
+        <ul id= "in-progress" class="in-progress-tasks"></ul>
     </div>
 
     <div>
         <h2>DONE:</h2>
         <input type="textarea" id="add-done-task" placeholder="Write new task here">
         <button id="submit-add-done">+Add task</button>
-        <ul class="done-tasks"></ul>
+        <ul id= "done" class="done-tasks"></ul>
     </div>
 </body>
 </html>
