@@ -2,7 +2,25 @@
 /*EVENT LISTENERS*/
 const Addbuttons = document.querySelectorAll("button");
 Addbuttons.forEach((button) => button.addEventListener("click", addTask));
+document.querySelector("#search").addEventListener("keyup", searchBar);
 
+/*INTERACTION FUNCTIONS*/
+//Search case-insensitively so only tasks that match the search string are displayed.
+function searchBar () {
+    const searchStr = document.querySelector("#search").value.toLowerCase();
+    const allTasks = document.querySelectorAll(".task");
+    let taskContent;
+    for (let i=0; i< allTasks.length; i++) {
+        let task = allTasks[i];
+        taskContent = task.textContent.toLowerCase();
+        if (taskContent.includes(searchStr)) {
+            task.style.display = "";
+        } else {
+            task.style.display = "none";
+        }
+    }
+}
+//Change task list by alt+1-3
 function changeTaskList (event) {
     let mouseEvent = event;
     let currentTask = mouseEvent.target;
@@ -22,9 +40,7 @@ function changeTaskList (event) {
             currentTask = mouseEvent.target;
          }; 
 }
-
-/*INTERACTION FUNCTIONS*/
-
+//Add a new task to the list where we pressed on the button
 function addTask (event) {
     const currentButton = event.target;
     const taskList = currentButton.nextElementSibling;
