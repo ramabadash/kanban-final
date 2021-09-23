@@ -5,6 +5,12 @@ Addbuttons.forEach((button) => button.addEventListener("click", addTask));
 document.querySelector("#search").addEventListener("keyup", searchBar);
 
 /*INTERACTION FUNCTIONS*/
+//Edit task content
+function editTaske (event) {
+    const currentTask = event.target;
+    currentTask.setAttribute("contenteditable", true);
+    currentTask.onblur = () => currentTask.setAttribute("contenteditable", false);
+}
 //Search case-insensitively so only tasks that match the search string are displayed.
 function searchBar () {
     const searchStr = document.querySelector("#search").value.toLowerCase();
@@ -52,7 +58,7 @@ function addTask (event) {
         return;
     }
     //Insert new task element
-    const newTaskElem = createElement("li", taskText, [], ["task"], {}, {mouseover: changeTaskList});
+    const newTaskElem = createElement("li", taskText, [], ["task"], {}, {mouseover: changeTaskList, click: editTaske});
     taskOnTop (newTaskElem, taskList);
     input.value = "";
 }
