@@ -1,0 +1,50 @@
+* {
+    font-family: Gluten;
+    font-size: 20px;
+    background-color: darkgray;
+}
+h1 {
+    font-size: 40px;
+    text-align: center;
+}
+h2 {
+    background-color: inherit;
+}
+#search {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    background-color: lightgray;
+}
+div {
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: lightgray;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 30%;
+    height: fit-content;
+}
+input {
+    background-color: inherit;
+}
+ul {
+    background-color: inherit; 
+}
+.task {
+    list-style: none;
+    width: 90%;
+    height: 10%;
+    border-width: 2px;
+    border-radius: 5px;
+    border-style: dashed;
+    margin-top: 5px;
+    padding: 4px;
+    background-color: lightseagreen;
+    text-align: center;
+    overflow: auto;
+}
