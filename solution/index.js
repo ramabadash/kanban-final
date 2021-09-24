@@ -5,8 +5,31 @@ dataReconstruction () ; // Create DOM by the Local Storage
 const Addbuttons = document.querySelectorAll("button");
 Addbuttons.forEach((button) => button.addEventListener("click", addTask));
 document.querySelector("#search").addEventListener("keyup", searchBar);
+//Drag and Drop
+const allSections = document.querySelectorAll("div");
+for (let section of allSections) {
+    section.addEventListener("dragover", (event) => event.preventDefault());
+    section.addEventListener("drop", taskDrop); 
+}
 
 /*INTERACTION FUNCTIONS*/
+//Task drop on a div section
+function taskDrop (event) {
+    event.preventDefault();
+    //get the correct task
+    const droppedTaskClass = event.dataTransfer.getData("text/plain");
+    const droppedTask = document.querySelector(`.${droppedTaskClass}`);
+    const previousList = droppedTask.parentElement;
+    const nextList = event.target.lastElementChild;
+    taskOnTop(droppedTask, nextList); //List transfer
+    //save new arrangement
+    saveNewDataLocal(previousList.id, previousList); // save old list changes to local
+    saveNewDataLocal(nextList.id, nextList); // save new list changes to local
+    
+    droppedTask.classList.remove("draggable-task");
+}
+
+
 //Edit task content
 function editTask (event) {
     const currentTask = event.target;

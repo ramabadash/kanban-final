@@ -1,4 +1,11 @@
 "use strict"
+//Create a unique and temporary class and move it when dragging a task item
+function draggableDataTransfer(event) {
+    const draggableElem = event.target;
+    draggableElem.classList.add("draggable-task");
+    event.dataTransfer.setData("text/plain", draggableElem.classList[1]);
+}
+
 //
 function dataReconstruction () {
     let primaryData = JSON.parse(window.localStorage.getItem('tasks'));  //gets local primary data after refresh
@@ -48,7 +55,8 @@ function taskOnTop (newTaskElem, taskList) {
 }
 //Create List Element
 function createListElement (innerText) {
-    return createElement("li", innerText, [], ["task"], {}, {mouseover: changeTaskList, click: editTask});
+    const eventListeners = {mouseover: changeTaskList, click: editTask, dragstart: draggableDataTransfer}
+    return createElement("li", innerText, [], ["task"], {"draggable": true}, eventListeners);
 }
 //Create Element
 function createElement(tagName, innerText, children = [], classes = [], attributes = {}, eventListeners = {}) {
