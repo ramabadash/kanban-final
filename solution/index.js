@@ -1,9 +1,10 @@
 "use strict"
-dataReconstruction () ; // Create DOM by the Local Storage
+dataReconstruction (); // Create DOM by the Local Storage
+updateDom();
 
 /*EVENT LISTENERS*/
 const Addbuttons = document.querySelectorAll("button");
-Addbuttons.forEach((button) => button.addEventListener("click", addTask));
+Addbuttons.forEach((button) => button.addEventListener("click", buttonsHandler));
 document.querySelector("#search").addEventListener("keyup", searchBar);
 //Drag and Drop
 const allSections = document.querySelectorAll("div");
@@ -79,6 +80,15 @@ function changeTaskList (event) {
             currentTask = mouseEvent.target;
          }; 
 }
+//create spesific handler to every button group
+function buttonsHandler (event) {
+    const parantElem = event.target.parentElement;
+    const elementId = event.target.id;
+    if (parantElem.tagName === "DIV") addTask (event); //add task buttons
+    else if (elementId === "save") saveToApi (); //save button
+    else if (elementId === "load") loadFromApi (); //load button
+    
+}
 //Add a new task to the list where we pressed on the button
 function addTask (event) {
     const currentButton = event.target;
@@ -97,4 +107,27 @@ function addTask (event) {
     //save on local storage
     saveNewDataLocal (taskList.id, taskList); // taskList.id = tasks[keys]
 }
+//save current information to API
+async function saveToApi () {
+    console.log("save");
+    await fetch('https://json-bins.herokuapp.com/bin/614b63eae352a453bebed50b', {
+      method: 'PUT',
+      body: JSON.stringify({
+         tasks: dataReconstruction(),
+      }),
+      headers: {
+         'Content-Type': 'application/json',
+      },
+   });
+}
+//load information from API
+async function loadFromApi () {
+    console.log("load");
+    const response = await fetch( 'https://json-bins.herokuapp.com/bin/614b63eae352a453bebed50b');
+    const data = await response.json();
 
+    saveDataLocal(data.tasks);
+
+    cleanDom();
+    updateDom();
+}

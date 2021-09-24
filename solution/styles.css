@@ -16,6 +16,9 @@ h2 {
     margin-bottom: 10px;
     background-color: lightgray;
 }
+#save ,#load {
+    float: right;
+}
 div {
     border-width: 5px;
     border-style: solid;

@@ -12,9 +12,8 @@ function dataReconstruction () {
     if(primaryData === null) { // There is no local storage -> define new empty one
         tasks = {"todo":[], "in-progress":[], "done":[] };
         localStorage.setItem('tasks', JSON.stringify(tasks));
-    } else {
-        updateDom();
-    }
+    } 
+    return JSON.parse(window.localStorage.getItem('tasks'));
 }
 //
 function updateDom() {
@@ -29,6 +28,15 @@ function updateDom() {
             }
         }
     }
+}
+//
+function cleanDom() {
+    const allTaskElem = document.querySelectorAll(".task");
+    for (let task of allTaskElem) task.remove();
+}
+//
+function saveDataLocal (data) {
+    localStorage.setItem("tasks", JSON.stringify(data));
 }
 //Save to local all list information
 function saveNewDataLocal (key, list) {
