@@ -3,7 +3,7 @@
 function playLoader() {
     const loader = document.querySelector("#loader");
     loader.classList.add("loader");
-    loader.style.display = "";
+    loader.style.display = "block";
 }
 //stop loader
 function stopLoader() {
@@ -17,7 +17,7 @@ function draggableDataTransfer(event) {
     event.dataTransfer.setData("text/plain", draggableElem.classList[1]);
 }
 //
-function dataReconstruction () {
+function dataReconstruction() {
     let primaryData = JSON.parse(window.localStorage.getItem('tasks'));  //gets local primary data after refresh
     if(primaryData === null) { // There is no local storage -> define new empty one
         tasks = {"todo":[], "in-progress":[], "done":[] };

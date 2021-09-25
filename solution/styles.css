@@ -2,22 +2,27 @@
     font-family: Gluten;
     font-size: 20px;
     background-color: darkgray;
+    display: flow-root;
 }
 h1 {
     font-size: 40px;
     text-align: center;
-}
-h2 {
-    background-color: inherit;
 }
 #search {
     display: block;
     margin-top: 5px;
     margin-bottom: 10px;
     background-color: lightgray;
+    width: 20%;
+    height: 30px;
 }
-#save ,#load {
-    float: right;
+#save-btn ,#load-btn {
+    float: inline-end;
+    margin-bottom: 10px;
+}
+/*TASK SECTIONS*/
+h2 {
+    background-color: inherit;
 }
 .section {
     border-width: 5px;
@@ -31,6 +36,16 @@ h2 {
     align-items: stretch;
     width: 30%;
     height: fit-content;
+    padding: 5px;
+}
+.todo > h2{
+    color: indianred;
+}
+.in-progress > h2{
+    color: rgba(255, 255, 0, 0.802);
+}
+.done > h2{
+    color: lightseagreen;
 }
 input {
     background-color: inherit;
@@ -38,6 +53,7 @@ input {
 ul {
     background-color: inherit; 
 }
+/*TASKS*/
 .task {
     list-style: none;
     width: 90%;
@@ -47,7 +63,6 @@ ul {
     border-style: dashed;
     margin-top: 5px;
     padding: 4px;
-    background-color: lightseagreen;
     text-align: center;
     overflow: auto;
 }
