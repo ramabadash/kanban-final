@@ -87,6 +87,7 @@ function buttonsHandler (event) {
     if (parantElem.tagName === "DIV") addTask (event); //add task buttons
     else if (elementId === "save-btn") saveToApi (); //save button
     else if (elementId === "load-btn") loadFromApi (); //load button
+    else if (elementId === "clear-btn") clearPage(); //clear tasks from DOM and local storage
     
 }
 //Add a new task to the list where we pressed on the button
@@ -135,4 +136,12 @@ async function loadFromApi () {
 
     cleanDom();
     updateDom();
+}
+//clear tasks from DOM and local storage
+function clearPage() {
+    playLoader();
+    cleanDom();
+    tasks = {"todo":[], "in-progress":[], "done":[] };
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    stopLoader();
 }
