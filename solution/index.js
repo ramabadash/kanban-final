@@ -1,6 +1,7 @@
 "use strict"
 dataReconstruction (); // Create DOM by the Local Storage
 updateDom();
+updateTotal();
 openMessage();
 
 /*EVENT LISTENERS*/
@@ -17,18 +18,22 @@ for (let section of allSections) {
 /*INTERACTION FUNCTIONS*/
 //Task drop on a div section
 function taskDrop (event) {
-    event.preventDefault();
-    //get the correct task
-    const droppedTaskClass = event.dataTransfer.getData("text/plain");
-    const droppedTask = document.querySelector(`.${droppedTaskClass}`);
-    const previousList = droppedTask.parentElement;
-    const nextList = event.target.lastElementChild;
-    taskOnTop(droppedTask, nextList); //List transfer
-    //save new arrangement
-    saveNewDataLocal(previousList.id, previousList); // save old list changes to local
-    saveNewDataLocal(nextList.id, nextList); // save new list changes to local
-    
-    droppedTask.classList.remove("draggable-task");
+    try {
+        event.preventDefault();
+        //get the correct task
+        const droppedTaskClass = event.dataTransfer.getData("text/plain");
+        const droppedTask = document.querySelector(`.${droppedTaskClass}`);
+        const previousList = droppedTask.parentElement;
+        const nextList = event.target.lastElementChild;
+        taskOnTop(droppedTask, nextList); //List transfer
+        //save new arrangement
+        saveNewDataLocal(previousList.id, previousList); // save old list changes to local
+        saveNewDataLocal(nextList.id, nextList); // save new list changes to local
+        
+        droppedTask.classList.remove("draggable-task");
+    } catch (error) {
+        alert ("Opps, Try to be more accurate");
+    }
 }
 
 

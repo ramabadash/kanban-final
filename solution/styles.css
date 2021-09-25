@@ -23,6 +23,9 @@ h1 {
 h2 {
     background-color: inherit;
 }
+.total {
+    background-color: inherit;
+}
 .section {
     border-width: 5px;
     border-style: solid;
@@ -64,6 +67,7 @@ ul {
     padding: 4px;
     text-align: center;
     overflow: auto;
+    cursor: grab ;
 }
 /*OPEN MESSEGE*/
 .morning, .afternoon, .night {

@@ -60,10 +60,11 @@ function saveNewDataLocal (key, list) {
     }
     tasks[key] = newTaskArray;
     localStorage.setItem("tasks", JSON.stringify(tasks));
+    updateTotal();
 }
 //Add task on top
 function taskOnTop (newTaskElem, taskList) {
-    if (newTaskElem === undefined || taskList === undefined) return;
+    if (!newTaskElem || !taskList) return;
     if (!taskList.hasChildNodes()){ //There are no tasks
         taskList.appendChild(newTaskElem);
     } else {

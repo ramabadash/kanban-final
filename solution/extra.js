@@ -1,4 +1,17 @@
 "use strict"
+//
+function updateTotal() {
+    const allListsElem = document.querySelectorAll("ul");
+    const data = JSON.parse(localStorage.getItem("tasks"));
+    const allLabel = document.querySelectorAll("label");
+    let i = 0;
+    for (let list of allListsElem) {
+        const totalNum = data[list.id].length;
+        const totalTasks = allLabel[i];
+        totalTasks.textContent = `Total: ${totalNum}`; 
+        i++;
+    }
+}
 //clear tasks from DOM and local storage
 function clearPage() {
     playLoader();
