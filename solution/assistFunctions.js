@@ -73,7 +73,7 @@ function taskOnTop (newTaskElem, taskList) {
 }
 //Create List Element
 function createListElement (innerText) {
-    const eventListeners = {mouseover: changeTaskList, click: editTask, dragstart: draggableDataTransfer}
+    const eventListeners = {mouseover: changeTaskList, click: editTask, dragstart: draggableDataTransfer};
     return createElement("li", innerText, [], ["task"], {"draggable": true}, eventListeners);
 }
 //Create Element
