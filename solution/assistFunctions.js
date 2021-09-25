@@ -65,6 +65,7 @@ function saveNewDataLocal (key, list) {
 //Add task on top
 function taskOnTop (newTaskElem, taskList) {
     if (!newTaskElem || !taskList) return;
+    if (taskList.id === "done") goodJob();
     if (!taskList.hasChildNodes()){ //There are no tasks
         taskList.appendChild(newTaskElem);
     } else {

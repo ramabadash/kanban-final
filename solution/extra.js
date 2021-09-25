@@ -37,3 +37,9 @@ function openMessage() {
     meseegeElem.classList.add("display"); //show messege
     setTimeout(() => meseegeElem.classList.remove("display"), 3000); //hidde messege
 }
+//
+function goodJob() {
+    const imgElem = document.querySelector("img");
+    imgElem.style.display = "flex"; //show img
+    setTimeout(() => imgElem.style.display = "none", 2000); //hidde img
+}
