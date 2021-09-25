@@ -1,11 +1,21 @@
 "use strict"
+//play loader
+function playLoader() {
+    const loader = document.querySelector("#loader");
+    loader.classList.add("loader");
+    loader.style.display = "";
+}
+//stop loader
+function stopLoader() {
+    loader.classList.remove("loader");
+    loader.style.display = "none";
+}
 //Create a unique and temporary class and move it when dragging a task item
 function draggableDataTransfer(event) {
     const draggableElem = event.target;
     draggableElem.classList.add("draggable-task");
     event.dataTransfer.setData("text/plain", draggableElem.classList[1]);
 }
-
 //
 function dataReconstruction () {
     let primaryData = JSON.parse(window.localStorage.getItem('tasks'));  //gets local primary data after refresh

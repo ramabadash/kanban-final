@@ -3,11 +3,11 @@ dataReconstruction (); // Create DOM by the Local Storage
 updateDom();
 
 /*EVENT LISTENERS*/
-const Addbuttons = document.querySelectorAll("button");
-Addbuttons.forEach((button) => button.addEventListener("click", buttonsHandler));
+const addButtons = document.querySelectorAll("button");
+addButtons.forEach((button) => button.addEventListener("click", buttonsHandler));
 document.querySelector("#search").addEventListener("keyup", searchBar);
 //Drag and Drop
-const allSections = document.querySelectorAll("div");
+const allSections = document.querySelectorAll(".section");
 for (let section of allSections) {
     section.addEventListener("dragover", (event) => event.preventDefault());
     section.addEventListener("drop", taskDrop); 
@@ -85,8 +85,8 @@ function buttonsHandler (event) {
     const parantElem = event.target.parentElement;
     const elementId = event.target.id;
     if (parantElem.tagName === "DIV") addTask (event); //add task buttons
-    else if (elementId === "save") saveToApi (); //save button
-    else if (elementId === "load") loadFromApi (); //load button
+    else if (elementId === "save-btn") saveToApi (); //save button
+    else if (elementId === "load-btn") loadFromApi (); //load button
     
 }
 //Add a new task to the list where we pressed on the button
@@ -109,23 +109,28 @@ function addTask (event) {
 }
 //save current information to API
 async function saveToApi () {
-    console.log("save");
-    await fetch('https://json-bins.herokuapp.com/bin/614b63eae352a453bebed50b', {
+    playLoader();
+    const response = await fetch('https://json-bins.herokuapp.com/bin/614b63eae352a453bebed50b', {
       method: 'PUT',
-      body: JSON.stringify({
-         tasks: dataReconstruction(),
+      body:  JSON.stringify({
+        tasks: dataReconstruction(),
       }),
       headers: {
          'Content-Type': 'application/json',
       },
    });
+   if (!response.ok) alert ("Please try again");
+   stopLoader();
 }
 //load information from API
 async function loadFromApi () {
-    console.log("load");
-    const response = await fetch( 'https://json-bins.herokuapp.com/bin/614b63eae352a453bebed50b');
+    playLoader();
+
+    const response = await fetch('https://json-bins.herokuapp.com/bin/614b63eae352a453bebed50b');
+    if (!response.ok) alert ("Please try again");
     const data = await response.json();
 
+    stopLoader();
     saveDataLocal(data.tasks);
 
     cleanDom();
