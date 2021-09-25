@@ -142,5 +142,6 @@ async function loadFromApi () {
 
     cleanDom();
     updateDom();
+    updateTotal();
 }
 

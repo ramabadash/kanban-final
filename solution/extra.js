@@ -18,6 +18,7 @@ function clearPage() {
     cleanDom();
     tasks = {"todo":[], "in-progress":[], "done":[] };
     localStorage.setItem('tasks', JSON.stringify(tasks));
+    updateTotal();
     stopLoader();
 }
 //show and hidde opening messege
