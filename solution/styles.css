@@ -2,7 +2,6 @@
     font-family: Gluten;
     font-size: 20px;
     background-color: darkgray;
-    display: flow-root;
 }
 h1 {
     font-size: 40px;
@@ -65,6 +64,25 @@ ul {
     padding: 4px;
     text-align: center;
     overflow: auto;
+}
+/*OPEN MESSEGE*/
+.morning, .afternoon, .night {
+    display: none;
+}
+.display {
+    display: block;
+    position: absolute;
+    left:25%;
+    top:25%;
+    text-align: center;
+    width: 50%;
+    height: auto;
+    font-size: 30px;
+    border: black;
+    border-width: 2px;
+    border-radius: 5px;
+    border-style: solid;
+    background-color: blanchedalmond;
 }
 /*LOADER*/
 #loader{

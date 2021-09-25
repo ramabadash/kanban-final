@@ -1,6 +1,7 @@
 "use strict"
 dataReconstruction (); // Create DOM by the Local Storage
 updateDom();
+openMessage();
 
 /*EVENT LISTENERS*/
 const addButtons = document.querySelectorAll("button");
