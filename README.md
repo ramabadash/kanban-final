@@ -1,4 +1,4 @@
-# Cyber4s 3rd Pre-Course Final Project
+# Cyber4s 3rd Pre-Course Final Project : KAN-BAN task-management application-
 
 ## My solution for task-management application-
 The solution is in the solution folder. Written using 
