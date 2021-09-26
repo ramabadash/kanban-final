@@ -1,4 +1,5 @@
 "use strict"
+/*ON PAGE LOAD*/
 dataReconstruction (); // Create DOM by the Local Storage
 updateDom();
 updateTotal();
@@ -9,13 +10,20 @@ const addButtons = document.querySelectorAll("button");
 addButtons.forEach((button) => button.addEventListener("click", buttonsHandler));
 document.querySelector("#search").addEventListener("keyup", searchBar);
 //Drag and Drop
-const allSections = document.querySelectorAll(".section");
+const allSections = document.querySelectorAll(".section"); //all 3 task sections 
 for (let section of allSections) {
     section.addEventListener("dragover", (event) => event.preventDefault());
     section.addEventListener("drop", taskDrop); 
 }
 
 /*INTERACTION FUNCTIONS*/
+/* HANDLER FUNCTION */
+//Create a unique and temporary class and move it when dragging a task item
+function draggableDataTransfer(event) {
+    const draggableElem = event.target;
+    draggableElem.classList.add("draggable-task");
+    event.dataTransfer.setData("text/plain", draggableElem.classList[1]);
+}
 //Task drop on a div section
 function taskDrop (event) {
     try {
@@ -35,8 +43,6 @@ function taskDrop (event) {
         alert ("Opps, Try to be more accurate");
     }
 }
-
-
 //Edit task content
 function editTask (event) {
     const currentTask = event.target;
@@ -94,7 +100,7 @@ function buttonsHandler (event) {
     else if (elementId === "save-btn") saveToApi (); //save button
     else if (elementId === "load-btn") loadFromApi (); //load button
     else if (elementId === "clear-btn") clearPage(); //clear tasks from DOM and local storage
-    
+    else return; 
 }
 //Add a new task to the list where we pressed on the button
 function addTask (event) {

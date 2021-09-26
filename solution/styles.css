@@ -3,6 +3,7 @@
     font-size: 20px;
     background-color: darkgray;
 }
+/*TOP*/
 h1 {
     font-size: 40px;
     text-align: center;
@@ -59,7 +60,7 @@ ul {
 .task {
     list-style: none;
     width: 90%;
-    height: 10%;
+    height: auto;
     border-width: 2px;
     border-radius: 5px;
     border-style: dashed;

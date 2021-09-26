@@ -10,22 +10,8 @@ function stopLoader() {
     loader.classList.remove("loader");
     loader.style.display = "none";
 }
-//Create a unique and temporary class and move it when dragging a task item
-function draggableDataTransfer(event) {
-    const draggableElem = event.target;
-    draggableElem.classList.add("draggable-task");
-    event.dataTransfer.setData("text/plain", draggableElem.classList[1]);
-}
-//
-function dataReconstruction() {
-    let primaryData = JSON.parse(window.localStorage.getItem('tasks'));  //gets local primary data after refresh
-    if(primaryData === null) { // There is no local storage -> define new empty one
-        tasks = {"todo":[], "in-progress":[], "done":[] };
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    } 
-    return JSON.parse(window.localStorage.getItem('tasks'));
-}
-//
+/* DOM RELATED */
+//Rebuilds the elements in DOM based on local storage
 function updateDom() {
     tasks = JSON.parse(localStorage.getItem("tasks"));
     for (let key in tasks) {
@@ -44,17 +30,28 @@ function cleanDom() {
     const allTaskElem = document.querySelectorAll(".task");
     for (let task of allTaskElem) task.remove();
 }
+/*DATA RELATED*/
+//Takes the information from the local storage, if the information is empty assign it an empty task template. Returns the updated content.
+function dataReconstruction() {
+    let primaryData = JSON.parse(window.localStorage.getItem('tasks'));  //gets local primary data after refresh
+    if(primaryData === null) { // There is no local storage -> define new empty one
+        tasks = {"todo":[], "in-progress":[], "done":[] };
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    } 
+    return JSON.parse(window.localStorage.getItem('tasks'));
+}
 //
 function saveDataLocal (data) {
     localStorage.setItem("tasks", JSON.stringify(data));
 }
-//Save to local all list information
+//Save to local all list new information
 function saveNewDataLocal (key, list) {
     tasks = JSON.parse(localStorage.getItem("tasks"));
     const taskList = list.childNodes;
     const newTaskArray = [];
     let taskContent;
-    for (let i = 0; i < taskList.length; i++) {
+    //create an array of content
+    for (let i = 0; i < taskList.length; i++) { 
         taskContent = taskList[i].textContent;
         newTaskArray.push(taskContent);
     }
@@ -62,6 +59,7 @@ function saveNewDataLocal (key, list) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
     updateTotal();
 }
+/* ELEMENT CREATION */
 //Add task on top
 function taskOnTop (newTaskElem, taskList) {
     if (!newTaskElem || !taskList) return;
