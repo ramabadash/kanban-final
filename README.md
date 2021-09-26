@@ -1,10 +1,25 @@
 # Cyber4s 3rd Pre-Course Final Project
 
 ## My solution for task-management application-
-The solution is written using HTML, JS, CSS files in the solution folder.
+The solution is in the solution folder. Written using 
+* HTML
+* JS
+* CSS 
 
 ![Example](./2021-09-26.png)
+---
+## Getting Started
+---
+### My GIT-HUB PAGE
+https://ramabadash.github.io/kanban-final/solution/
+### Open localy-
 
+### Installation
+1. Clone the repo 
+https://github.com/ramabadash/kanban-final/tree/kanban-solution-0.1
+
+2. Install NPM packages
+`npm run final <your name> (replace <your name> with your name)`
 ---
 ## Page Structure
 ---
