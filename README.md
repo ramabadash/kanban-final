@@ -6,7 +6,7 @@ The solution is in the solution folder. Written using
 * JS
 * CSS 
 
-![Example](./2021-09-26.png)
+![Example](./2021-09-27.png)
 ---
 ## Getting Started
 ---
@@ -33,6 +33,8 @@ https://github.com/ramabadash/kanban-final/tree/kanban-solution-0.1
 * **Input -** You can enter the contents of the new task.
 * **Add button -** Add a new task to the top of the list based on the content in the Input above.
 * **Tasks -** The various tasks to be performed. Background color depending on the position between the lists.
+* **Delete task -** A task can be dragged to the area and it will be deleted.
+
 ---- 
 ## Interaction
 ---
@@ -48,12 +50,15 @@ Second option: drag the task and place it on the list you want.
 * **Clock -** Shown on the top left is the current time for the current moment.
 * **Good job -** Whenever a task gets done it will display gif - good job.
 * **Total -** Total tasks in section. Updated regularly.
+* **Delete task -** A task can be dragged to the area and it will be deleted.
+
 ---
 ## Storage
 ---
 * **Local storage -** Any change on the page will be saved immediately in the local storage without the need for active action of the user.
 
 * **API storage -** When you click the save button specified above, the information on the page will be saved in its current form in the API storage. By clicking on the load button the information will be displayed on the page as recently saved in the API even if it is different in the local storage. Local storage will be updated accordingly.
+
 ---
 ## Future
 ---

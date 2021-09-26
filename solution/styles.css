@@ -79,6 +79,22 @@ ul {
 .done .task{
     background-color: rgb(32, 178, 107, 0.5);
 }
+/*DELETE*/
+#delete {
+    display:grid;
+    position: absolute;
+    top: 70%;
+    left: 40%;
+    height: 150px;
+    width: 250px;
+    text-align: center;
+    font-size: 50px;
+    padding: auto;
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 5px;
+    background-color: lightgray;
+}
 /*GOOD JOB IMAGE*/
 .good-job {
     display: none;

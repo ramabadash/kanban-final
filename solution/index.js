@@ -15,6 +15,9 @@ for (let section of allSections) {
     section.addEventListener("dragover", (event) => event.preventDefault());
     section.addEventListener("drop", taskDrop); 
 }
+const deleteElem = document.querySelector("#delete");
+deleteElem.addEventListener("dragover", (event) => event.preventDefault());
+deleteElem.addEventListener("drop", taskDrop);
 
 /*INTERACTION FUNCTIONS*/
 /* HANDLER FUNCTION */
@@ -33,12 +36,19 @@ function taskDrop (event) {
         const droppedTask = document.querySelector(`.${droppedTaskClass}`);
         const previousList = droppedTask.parentElement;
         const nextList = event.target.lastElementChild;
-        taskOnTop(droppedTask, nextList); //List transfer
-        //save new arrangement
-        saveNewDataLocal(previousList.id, previousList); // save old list changes to local
-        saveNewDataLocal(nextList.id, nextList); // save new list changes to local
-        
-        droppedTask.classList.remove("draggable-task");
+        //If it is delete task erea
+        if(event.target.id === "delete") {
+            droppedTask.remove(); //Task delete
+            saveNewDataLocal(previousList.id, previousList); // save old list changes to local
+            droppedTask.classList.remove("draggable-task");
+        } else {
+            taskOnTop(droppedTask, nextList); //List transfer
+            //save new arrangement
+            saveNewDataLocal(previousList.id, previousList); // save old list changes to local
+            saveNewDataLocal(nextList.id, nextList); // save new list changes to local
+            
+            droppedTask.classList.remove("draggable-task");
+        }
     } catch (error) {
         alert ("Opps, Try to be more accurate");
     }
