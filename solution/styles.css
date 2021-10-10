@@ -81,15 +81,14 @@ ul {
 }
 /*DELETE*/
 #delete {
-    display:grid;
+    display:none;
     position: absolute;
-    top: 70%;
-    left: 40%;
-    height: 150px;
-    width: 250px;
+    bottom: 0%;
+    right: 0%;
+    height: auto;
+    width: auto;
     text-align: center;
-    font-size: 50px;
-    padding: auto;
+    font-size: 40px;
     border-width: 5px;
     border-style: solid;
     border-radius: 5px;
@@ -101,8 +100,9 @@ ul {
     position: absolute;
     width: 100;
     height: 100px;
-    left:70%;
+    left:75%;
     top:20%;
+    background-color: transparent;
 }
 /*OPEN MESSEGE*/
 .morning, .afternoon, .night {
