@@ -3,13 +3,13 @@
 /*---------------------------------------------------------------*/
 /**********Folder: "SOLUTION", File: "INDEX.JS" **********/
 /*---------------------------------------------------------------*/
-
-dataReconstruction (); // Create DOM by the Local Storage
-updateDom();
-updateTotal();
-openMessage();
-
-
+function pageLoad() {
+    localStorageValidator (); // Create DOM by the Local Storage
+    updateDom();
+    updateTotal();
+    openMessage();
+}
+pageLoad();
 /*---------------------------------------------------------------*/
 /**********Folder: "DIRECTIVES", File: "ADD-TASK.JS" **********/
 /*---------------------------------------------------------------*/
@@ -19,12 +19,7 @@ function addTask (event) {
     const currentButton = event.target;
     const taskList = currentButton.nextElementSibling;
     const input = currentButton.previousElementSibling;
-    const taskText = input.value;
-    //Trying to submit empty tasks
-    if (taskText.length === 0) {
-        alert ("Can't insert empty task. Try again");
-        return;
-    }
+    const taskText = inputVadilator(input.value);
     //Insert new task element
     const newTaskElem = createListElement(taskText);
     taskOnTop (newTaskElem, taskList);
@@ -43,16 +38,19 @@ document.querySelector("#search").addEventListener("keyup", searchBar);
 function searchBar () {
     const searchStr = document.querySelector("#search").value.toLowerCase();
     const allTasks = document.querySelectorAll(".task");
-    let taskContent;
     for (let i=0; i< allTasks.length; i++) {
         let task = allTasks[i];
-        taskContent = task.textContent.toLowerCase();
+        filterTasksByStr(task, searchStr);
+    }
+}
+//Gets a task and a string. If it contains the string it will display the task otherwise it will disappear.
+function filterTasksByStr(task, searchStr){
+    let taskContent = task.textContent.toLowerCase();
         if (taskContent.includes(searchStr)) {
             task.style.display = "";
         } else {
             task.style.display = "none";
         }
-    }
 }
 /*---------------------------------------------------------------*/
 /**********Folder: "DIRECTIVES", File: "DRAG-AND-DROP-TASK.JS" **********/
@@ -74,6 +72,7 @@ function draggableDataTransfer(event) {
     const draggableElem = event.target;
     draggableElem.classList.add("draggable-task");
     event.dataTransfer.setData("text/plain", draggableElem.classList[1]);
+    document.getElementById("delete").style.display = "grid"; //display delete task area
 }
 //Task drop on a div section
 function taskDrop (event) {
@@ -88,15 +87,14 @@ function taskDrop (event) {
         if(event.target.id === "delete") {
             droppedTask.remove(); //Task delete
             saveNewDataLocal(previousList.id, previousList); // save old list changes to local
-            droppedTask.classList.remove("draggable-task");
         } else {
             taskOnTop(droppedTask, nextList); //List transfer
             //save new arrangement
             saveNewDataLocal(previousList.id, previousList); // save old list changes to local
             saveNewDataLocal(nextList.id, nextList); // save new list changes to local
-            
-            droppedTask.classList.remove("draggable-task");
         }
+        droppedTask.classList.remove("draggable-task");
+        document.getElementById("delete").style.display = "none"; //display delete task area
     } catch (error) {
         alert ("Opps, Try to be more accurate");
     }
@@ -111,16 +109,9 @@ function changeTaskList (event) {
     let currentTask = mouseEvent.target;
     let previousList = currentTask.parentElement;
         document.onkeydown = (event)=>{
-            let nextList;
-            if(event.altKey && event.key === "1"){
-                nextList = document.querySelector(".to-do-tasks");
-            } else if (event.altKey && event.key === "2"){
-                nextList = document.querySelector(".in-progress-tasks");
-            } else if (event.altKey && event.key === "3") {
-                nextList = document.querySelector(".done-tasks");
-            } else {
-                return;
-            }
+            let nextList = nextListByKey(event);
+            if (!nextList) return; //there is not net list
+            if (nextList.id === previousList.id) return; //If it is the same list
             taskOnTop (currentTask, nextList);
             //save new arrangement
             saveNewDataLocal(previousList.id, previousList); // save old list changes to local
@@ -129,6 +120,7 @@ function changeTaskList (event) {
             currentTask = mouseEvent.target;
          }; 
 }
+
 /*---------------------------------------------------------------*/
 /**********Folder: "DIRECTIVES", File: "NETWORK-BUTTONS.JS" **********/
 /*---------------------------------------------------------------*/
@@ -139,7 +131,7 @@ async function saveToApi () {
     const response = await fetch('https://json-bins.herokuapp.com/bin/614b63eae352a453bebed50b', {
       method: 'PUT',
       body:  JSON.stringify({
-        tasks: dataReconstruction(),
+        tasks: localStorageValidator(),
       }),
       headers: {
          'Content-Type': 'application/json',
@@ -178,9 +170,17 @@ function editTask (event) {
         currentTask.setAttribute("contenteditable", false);
     }
 }
-
+//Gets a task and a string. If it contains the string it will display the task otherwise it will disappear.
+function filterTasksByStr(task, searchStr){
+    let taskContent = task.textContent.toLowerCase();
+        if (taskContent.includes(searchStr)) {
+            task.style.display = "";
+        } else {
+            task.style.display = "none";
+        }
+}
 /*---------------------------------------------------------------*/
-/**********Folder: "DIRECTIVES", File: "ALL-BUTTONS.JS" **********/
+/**********Folder: "DIRECTIVES", File: "ALL-BUTTONS-HANDLER.JS" **********/
 /*---------------------------------------------------------------*/
 
 const addButtons = document.querySelectorAll("button");
@@ -196,6 +196,5 @@ function buttonsHandler (event) {
     else if (elementId === "clear-btn") clearPage(); //clear tasks from DOM and local storage
     else return; 
 }
-
 
 

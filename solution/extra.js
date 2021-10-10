@@ -3,19 +3,6 @@
 /**********Folder: "SERVICES", File: "DOM.JS" **********/
 /*---------------------------------------------------------------*/
 
-//Updates total tasks based on local storage
-function updateTotal() {
-    const allListsElem = document.querySelectorAll("ul");
-    const data = JSON.parse(localStorage.getItem("tasks"));
-    const allLabel = document.querySelectorAll("label");
-    let i = 0;
-    for (let list of allListsElem) {
-        const totalNum = data[list.id].length; // data[list.id] = tasks[key]
-        const totalTasks = allLabel[i]; //Reaches total according to the selected list
-        totalTasks.textContent = `Total: ${totalNum}`; 
-        i++;
-    }
-}
 //clear tasks from DOM and local storage
 function clearPage() {
     cleanDom();
@@ -24,16 +11,26 @@ function clearPage() {
     updateTotal();
 }
 
-
 /*---------------------------------------------------------------*/
 /**********Folder: "SERVICES", File: "TIME-INTICATOR.JS" **********/
 /*---------------------------------------------------------------*/
 
 //show and hidde opening messege - Depends on the hour 
 function openMessage() {
+    const hour = currentHour();
+    let meseegeElem = elemByDaySection(hour);
+    meseegeElem.classList.add("display"); //show messege
+    setTimeout(() => meseegeElem.classList.remove("display"), 3000); //hidde messege
+}
+//
+function currentHour(){
     const splitDate = Date().split(" ");
     const splitTime = splitDate[4].split(":"); //get time and split to hour, min, sec
     const hour = splitTime[0];
+    return hour;
+}
+//Returns the appropriate element to display according to the hour.
+function elemByDaySection(hour) {
     let meseegeElem;
     if (hour > 6 && hour < 12) {
         meseegeElem = document.querySelector(".morning");
@@ -42,8 +39,7 @@ function openMessage() {
     } else {
         meseegeElem = document.querySelector(".night"); 
     }
-    meseegeElem.classList.add("display"); //show messege
-    setTimeout(() => meseegeElem.classList.remove("display"), 3000); //hidde messege
+    return meseegeElem;
 }
 //Fixed clock
 function startTime() {
@@ -72,4 +68,22 @@ function goodJob() {
     const imgElem = document.querySelector("img");
     imgElem.style.display = "flex"; //show img
     setTimeout(() => imgElem.style.display = "none", 2000); //hidde img
+}
+
+/*---------------------------------------------------------------*/
+/**********Folder: "SERVICES", File: "TASKS-LIST.JS" **********/
+/*---------------------------------------------------------------*/
+
+//Updates total tasks based on local storage
+function updateTotal() {
+    const allListsElem = document.querySelectorAll("ul");
+    const data = JSON.parse(localStorage.getItem("tasks"));
+    const allLabel = document.querySelectorAll("label");
+    let i = 0;
+    for (let list of allListsElem) {
+        const totalNum = data[list.id].length; // data[list.id] = tasks[key]
+        const totalTasks = allLabel[i]; //Reaches total according to the selected list
+        totalTasks.textContent = `Total: ${totalNum}`; 
+        i++;
+    }
 }
