@@ -1,14 +1,63 @@
 "use strict"
-/*ON PAGE LOAD*/
+
+/*---------------------------------------------------------------*/
+/**********Folder: "SOLUTION", File: "INDEX.JS" **********/
+/*---------------------------------------------------------------*/
+
 dataReconstruction (); // Create DOM by the Local Storage
 updateDom();
 updateTotal();
 openMessage();
 
-/*EVENT LISTENERS*/
-const addButtons = document.querySelectorAll("button");
-addButtons.forEach((button) => button.addEventListener("click", buttonsHandler));
+
+/*---------------------------------------------------------------*/
+/**********Folder: "DIRECTIVES", File: "ADD-TASK.JS" **********/
+/*---------------------------------------------------------------*/
+
+//Add a new task to the list where we pressed on the button
+function addTask (event) {
+    const currentButton = event.target;
+    const taskList = currentButton.nextElementSibling;
+    const input = currentButton.previousElementSibling;
+    const taskText = input.value;
+    //Trying to submit empty tasks
+    if (taskText.length === 0) {
+        alert ("Can't insert empty task. Try again");
+        return;
+    }
+    //Insert new task element
+    const newTaskElem = createListElement(taskText);
+    taskOnTop (newTaskElem, taskList);
+    input.value = "";
+    //save on local storage
+    saveNewDataLocal (taskList.id, taskList); // taskList.id = tasks[keys]
+}
+
+/*---------------------------------------------------------------*/
+/**********Folder: "DIRECTIVES", File: "SEARCH-TASK.JS" **********/
+/*---------------------------------------------------------------*/
+
 document.querySelector("#search").addEventListener("keyup", searchBar);
+
+//Search case-insensitively so only tasks that match the search string are displayed.
+function searchBar () {
+    const searchStr = document.querySelector("#search").value.toLowerCase();
+    const allTasks = document.querySelectorAll(".task");
+    let taskContent;
+    for (let i=0; i< allTasks.length; i++) {
+        let task = allTasks[i];
+        taskContent = task.textContent.toLowerCase();
+        if (taskContent.includes(searchStr)) {
+            task.style.display = "";
+        } else {
+            task.style.display = "none";
+        }
+    }
+}
+/*---------------------------------------------------------------*/
+/**********Folder: "DIRECTIVES", File: "DRAG-AND-DROP-TASK.JS" **********/
+/*---------------------------------------------------------------*/
+
 //Drag and Drop
 const allSections = document.querySelectorAll(".section"); //all 3 task sections 
 for (let section of allSections) {
@@ -19,8 +68,7 @@ const deleteElem = document.querySelector("#delete");
 deleteElem.addEventListener("dragover", (event) => event.preventDefault());
 deleteElem.addEventListener("drop", taskDrop);
 
-/*INTERACTION FUNCTIONS*/
-/* HANDLER FUNCTION */
+
 //Create a unique and temporary class and move it when dragging a task item
 function draggableDataTransfer(event) {
     const draggableElem = event.target;
@@ -53,31 +101,10 @@ function taskDrop (event) {
         alert ("Opps, Try to be more accurate");
     }
 }
-//Edit task content
-function editTask (event) {
-    const currentTask = event.target;
-    const currentList = currentTask.parentElement;
-    currentTask.setAttribute("contenteditable", true);
-    currentTask.onblur = () => {
-        saveNewDataLocal(currentList.id, currentList);
-        currentTask.setAttribute("contenteditable", false);
-    }
-}
-//Search case-insensitively so only tasks that match the search string are displayed.
-function searchBar () {
-    const searchStr = document.querySelector("#search").value.toLowerCase();
-    const allTasks = document.querySelectorAll(".task");
-    let taskContent;
-    for (let i=0; i< allTasks.length; i++) {
-        let task = allTasks[i];
-        taskContent = task.textContent.toLowerCase();
-        if (taskContent.includes(searchStr)) {
-            task.style.display = "";
-        } else {
-            task.style.display = "none";
-        }
-    }
-}
+/*---------------------------------------------------------------*/
+/**********Folder: "DIRECTIVES", File: "MOVE-TASK.JS" **********/
+/*---------------------------------------------------------------*/
+
 //Change task list by alt+1-3
 function changeTaskList (event) {
     let mouseEvent = event;
@@ -102,34 +129,10 @@ function changeTaskList (event) {
             currentTask = mouseEvent.target;
          }; 
 }
-//create spesific handler to every button group
-function buttonsHandler (event) {
-    const parantElem = event.target.parentElement;
-    const elementId = event.target.id;
-    if (parantElem.tagName === "DIV") addTask (event); //add task buttons
-    else if (elementId === "save-btn") saveToApi (); //save button
-    else if (elementId === "load-btn") loadFromApi (); //load button
-    else if (elementId === "clear-btn") clearPage(); //clear tasks from DOM and local storage
-    else return; 
-}
-//Add a new task to the list where we pressed on the button
-function addTask (event) {
-    const currentButton = event.target;
-    const taskList = currentButton.nextElementSibling;
-    const input = currentButton.previousElementSibling;
-    const taskText = input.value;
-    //Trying to submit empty tasks
-    if (taskText.length === 0) {
-        alert ("Can't insert empty task. Try again");
-        return;
-    }
-    //Insert new task element
-    const newTaskElem = createListElement(taskText);
-    taskOnTop (newTaskElem, taskList);
-    input.value = "";
-    //save on local storage
-    saveNewDataLocal (taskList.id, taskList); // taskList.id = tasks[keys]
-}
+/*---------------------------------------------------------------*/
+/**********Folder: "DIRECTIVES", File: "NETWORK-BUTTONS.JS" **********/
+/*---------------------------------------------------------------*/
+
 //save current information to API
 async function saveToApi () {
     playLoader();
@@ -160,4 +163,39 @@ async function loadFromApi () {
     updateDom();
     updateTotal();
 }
+
+/*---------------------------------------------------------------*/
+/**********Folder: "DIRECTIVES", File: "TASKS.JS" **********/
+/*---------------------------------------------------------------*/
+
+//Edit task content
+function editTask (event) {
+    const currentTask = event.target;
+    const currentList = currentTask.parentElement;
+    currentTask.setAttribute("contenteditable", true);
+    currentTask.onblur = () => {
+        saveNewDataLocal(currentList.id, currentList);
+        currentTask.setAttribute("contenteditable", false);
+    }
+}
+
+/*---------------------------------------------------------------*/
+/**********Folder: "DIRECTIVES", File: "ALL-BUTTONS.JS" **********/
+/*---------------------------------------------------------------*/
+
+const addButtons = document.querySelectorAll("button");
+addButtons.forEach((button) => button.addEventListener("click", buttonsHandler));
+
+//create spesific handler to every button group
+function buttonsHandler (event) {
+    const parantElem = event.target.parentElement;
+    const elementId = event.target.id;
+    if (parantElem.tagName === "DIV") addTask (event); //add task buttons
+    else if (elementId === "save-btn") saveToApi (); //save button
+    else if (elementId === "load-btn") loadFromApi (); //load button
+    else if (elementId === "clear-btn") clearPage(); //clear tasks from DOM and local storage
+    else return; 
+}
+
+
 

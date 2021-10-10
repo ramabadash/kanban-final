@@ -1,4 +1,8 @@
 "use strict"
+/*---------------------------------------------------------------*/
+/**********Folder: "SERVICES", File: "DOM.JS" **********/
+/*---------------------------------------------------------------*/
+
 //Updates total tasks based on local storage
 function updateTotal() {
     const allListsElem = document.querySelectorAll("ul");
@@ -14,13 +18,17 @@ function updateTotal() {
 }
 //clear tasks from DOM and local storage
 function clearPage() {
-    playLoader();
     cleanDom();
     tasks = {"todo":[], "in-progress":[], "done":[] }; 
     localStorage.setItem('tasks', JSON.stringify(tasks)); // delete local storage
     updateTotal();
-    stopLoader();
 }
+
+
+/*---------------------------------------------------------------*/
+/**********Folder: "SERVICES", File: "TIME-INTICATOR.JS" **********/
+/*---------------------------------------------------------------*/
+
 //show and hidde opening messege - Depends on the hour 
 function openMessage() {
     const splitDate = Date().split(" ");
@@ -37,12 +45,6 @@ function openMessage() {
     meseegeElem.classList.add("display"); //show messege
     setTimeout(() => meseegeElem.classList.remove("display"), 3000); //hidde messege
 }
-//Show "good job" img and hidde after 2 seconds
-function goodJob() {
-    const imgElem = document.querySelector("img");
-    imgElem.style.display = "flex"; //show img
-    setTimeout(() => imgElem.style.display = "none", 2000); //hidde img
-}
 //Fixed clock
 function startTime() {
     const today = new Date();
@@ -58,4 +60,16 @@ function startTime() {
 function checkTime(i) {
     if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
     return i;
+}
+
+
+/*---------------------------------------------------------------*/
+/**********Folder: "SERVICES", File: "TASKS.JS" **********/
+/*---------------------------------------------------------------*/
+
+//Show "good job" img and hidde after 2 seconds
+function goodJob() {
+    const imgElem = document.querySelector("img");
+    imgElem.style.display = "flex"; //show img
+    setTimeout(() => imgElem.style.display = "none", 2000); //hidde img
 }

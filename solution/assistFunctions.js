@@ -1,4 +1,9 @@
 "use strict"
+
+/*---------------------------------------------------------------*/
+/**********Folder: "SERVICES", File: "DOM.JS" **********/
+/*---------------------------------------------------------------*/
+
 //play loader
 function playLoader() {
     const loader = document.querySelector("#loader");
@@ -10,7 +15,6 @@ function stopLoader() {
     loader.classList.remove("loader");
     loader.style.display = "none";
 }
-/* DOM RELATED */
 //Rebuilds the elements in DOM based on local storage
 function updateDom() {
     tasks = JSON.parse(localStorage.getItem("tasks"));
@@ -29,47 +33,6 @@ function updateDom() {
 function cleanDom() {
     const allTaskElem = document.querySelectorAll(".task");
     for (let task of allTaskElem) task.remove();
-}
-/*DATA RELATED*/
-//Takes the information from the local storage, if the information is empty assign it an empty task template. Returns the updated content.
-function dataReconstruction() {
-    let primaryData = JSON.parse(window.localStorage.getItem('tasks'));  //gets local primary data after refresh
-    if(primaryData === null) { // There is no local storage -> define new empty one
-        tasks = {"todo":[], "in-progress":[], "done":[] };
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    } 
-    return JSON.parse(window.localStorage.getItem('tasks'));
-}
-//
-function saveDataLocal (data) {
-    localStorage.setItem("tasks", JSON.stringify(data));
-}
-//Save to local all list new information
-function saveNewDataLocal (key, list) {
-    tasks = JSON.parse(localStorage.getItem("tasks"));
-    const taskList = list.childNodes;
-    const newTaskArray = [];
-    let taskContent;
-    //create an array of content
-    for (let i = 0; i < taskList.length; i++) { 
-        taskContent = taskList[i].textContent;
-        newTaskArray.push(taskContent);
-    }
-    tasks[key] = newTaskArray;
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-    updateTotal();
-}
-/* ELEMENT CREATION */
-//Add task on top
-function taskOnTop (newTaskElem, taskList) {
-    if (!newTaskElem || !taskList) return;
-    if (taskList.id === "done") goodJob();
-    if (!taskList.hasChildNodes()){ //There are no tasks
-        taskList.appendChild(newTaskElem);
-    } else {
-        const firstTask = taskList.firstElementChild;
-        firstTask.insertAdjacentElement("beforebegin", newTaskElem);
-    }
 }
 //Create List Element
 function createListElement (innerText) {
@@ -103,4 +66,53 @@ function createElement(tagName, innerText, children = [], classes = [], attribut
     newElement.textContent = innerText;
 
     return newElement;
+}
+
+/*---------------------------------------------------------------*/
+/**********Folder: "SERVICES", File: "LOCAL-STORAGE.JS" **********/
+/*---------------------------------------------------------------*/
+
+//Takes the information from the local storage, if the information is empty assign it an empty task template. Returns the updated content.
+function dataReconstruction() {
+    let primaryData = JSON.parse(window.localStorage.getItem('tasks'));  //gets local primary data after refresh
+    if(primaryData === null) { // There is no local storage -> define new empty one
+        tasks = {"todo":[], "in-progress":[], "done":[] };
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    } 
+    return JSON.parse(window.localStorage.getItem('tasks'));
+}
+//
+function saveDataLocal (data) {
+    localStorage.setItem("tasks", JSON.stringify(data));
+}
+//Save to local all list new information
+function saveNewDataLocal (key, list) {
+    tasks = JSON.parse(localStorage.getItem("tasks"));
+    const taskList = list.childNodes;
+    const newTaskArray = [];
+    let taskContent;
+    //create an array of content
+    for (let i = 0; i < taskList.length; i++) { 
+        taskContent = taskList[i].textContent;
+        newTaskArray.push(taskContent);
+    }
+    tasks[key] = newTaskArray;
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    updateTotal();
+}
+
+/*---------------------------------------------------------------*/
+/**********Folder: "SERVICES", File: "TASKS.JS" **********/
+/*---------------------------------------------------------------*/
+
+//Add task on top
+function taskOnTop (newTaskElem, taskList) {
+    if (!newTaskElem || !taskList) return;
+    if (taskList.id === "done") goodJob();
+    if (!taskList.hasChildNodes()){ //There are no tasks
+        taskList.appendChild(newTaskElem);
+    } else {
+        const firstTask = taskList.firstElementChild;
+        firstTask.insertAdjacentElement("beforebegin", newTaskElem);
+    }
 }
