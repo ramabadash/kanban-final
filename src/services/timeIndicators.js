@@ -32,7 +32,7 @@ function checkTime(i) {
   return i
 }
 // Fixed clock
-function startTime() {
+export function startTime() {
   const today = new Date()
   const h = today.getHours()
   let m = today.getMinutes()
